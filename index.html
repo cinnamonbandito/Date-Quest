@@ -1,108 +1,1123 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agata's Sidequests</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>🦝 DATE QUEST</title>
+
 <style>
+
 :root{
-  --bg:#090a0f; --panel:#11131b; --panel2:#171a24; --text:#f2f3f7;
-  --muted:#9499aa; --accent:#b8ff5a; --accent2:#7c5cff;
-  --border:#292d3b;
+ --bg:#0a0a0a;
+ --card:#121212;
+ --card2:#181818;
+ --text:#f5f5f5;
+ --muted:#888;
+ --line:#262626;
+ --green:#d9ff62;
+ --red:#ff6b6b;
 }
-*{box-sizing:border-box}
+
+*{
+ box-sizing:border-box;
+}
+
 body{
-  margin:0; min-height:100vh; color:var(--text);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(124,92,255,.18),transparent 28%),
-    radial-gradient(circle at 90% 85%,rgba(184,255,90,.10),transparent 25%),
-    var(--bg);
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Inter,system-ui,sans-serif;
 }
-.app{max-width:1050px;margin:auto;padding:34px 20px 60px}
-header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:28px}
-.kicker{color:var(--accent);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
-h1{font-size:clamp(2.3rem,7vw,5rem);line-height:.95;margin:8px 0 12px;letter-spacing:-.055em}
-.subtitle{color:var(--muted);max-width:620px;font-size:1rem}
-.stats{display:flex;gap:10px;flex-wrap:wrap}
-.stat{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:12px 15px;min-width:100px}
-.stat b{display:block;font-size:1.25rem}.stat span{color:var(--muted);font-size:.72rem}
-.progress{height:8px;background:#20232e;border-radius:99px;overflow:hidden;margin-top:10px}
-.progress>i{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px}
-h2{font-size:1.15rem;margin:30px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
+
+button{
+ font:inherit;
+}
+
+.app{
+ max-width:1050px;
+ margin:auto;
+ padding:24px 18px 60px;
+}
+
+/* HEADER */
+
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:flex-start;
+ gap:20px;
+ padding-bottom:30px;
+ border-bottom:1px solid var(--line);
+}
+
+.logo{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.raccoon{
+ width:52px;
+ height:52px;
+ border:1px solid var(--line);
+ border-radius:15px;
+ display:grid;
+ place-items:center;
+ font-size:1.8rem;
+ background:var(--card);
+}
+
+.kicker{
+ font-size:.65rem;
+ color:var(--muted);
+ letter-spacing:.2em;
+ text-transform:uppercase;
+}
+
+h1{
+ font-size:clamp(3rem,8vw,6rem);
+ line-height:.85;
+ letter-spacing:-.07em;
+ margin:20px 0;
+}
+
+.subtitle{
+ max-width:580px;
+ color:var(--muted);
+ line-height:1.5;
+}
+
+.stats{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+}
+
+.stat{
+ background:var(--card);
+ border:1px solid var(--line);
+ padding:12px;
+ border-radius:12px;
+ min-width:75px;
+}
+
+.stat b{
+ display:block;
+}
+
+.stat span{
+ color:var(--muted);
+ font-size:.6rem;
+}
+
+/* RACCOON MESSAGE */
+
+.raccoon-message{
+ margin:22px 0;
+ padding:16px;
+ border:1px solid var(--line);
+ background:var(--card);
+ border-radius:14px;
+ display:flex;
+ gap:12px;
+ align-items:center;
+}
+
+.raccoon-message .face{
+ font-size:1.7rem;
+}
+
+.raccoon-message span{
+ color:var(--muted);
+ font-size:.85rem;
+}
+
+/* MODE BUTTONS */
+
+.modes{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+ margin:18px 0;
+}
+
+.mode{
+ border:1px solid var(--line);
+ background:transparent;
+ color:var(--muted);
+ padding:8px 13px;
+ border-radius:999px;
+ cursor:pointer;
+ font-size:.72rem;
+}
+
+.mode:hover{
+ color:white;
+ border-color:#555;
+}
+
+.mode.active{
+ background:white;
+ color:black;
+}
+
+/* QUESTS */
+
+.grid{
+ display:grid;
+ grid-template-columns:
+ repeat(auto-fit,minmax(230px,1fr));
+ gap:10px;
+}
+
 .quest{
-  position:relative;text-align:left;color:var(--text);background:linear-gradient(145deg,var(--panel2),var(--panel));
-  border:1px solid var(--border);border-radius:18px;padding:20px;min-height:170px;
-  cursor:pointer;transition:.18s ease;overflow:hidden
+ position:relative;
+ background:var(--card);
+ border:1px solid var(--line);
+ border-radius:15px;
+ padding:18px;
+ color:white;
+ text-align:left;
+ cursor:pointer;
+ min-height:185px;
+ transition:.18s;
 }
-.quest:hover{transform:translateY(-3px);border-color:#555c72}
-.quest.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 15px 45px rgba(184,255,90,.08)}
-.quest .icon{font-size:1.8rem}.tag{display:inline-block;margin-top:12px;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}
-.quest h3{margin:7px 0 6px;font-size:1.05rem}.quest p{margin:0;color:var(--muted);font-size:.87rem;line-height:1.45}
-.check{position:absolute;right:15px;top:15px;width:25px;height:25px;border:1px solid #444a5b;border-radius:50%;display:grid;place-items:center;color:transparent}
-.selected .check{background:var(--accent);border-color:var(--accent);color:#090a0f;font-weight:900}
-.actions{display:flex;gap:10px;margin-top:20px}
-button.action{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer}
-.confirm{background:var(--accent);color:#090a0f}.cancel{background:#20232e;color:white}
+
+.quest:hover{
+ transform:translateY(-3px);
+ background:var(--card2);
+}
+
+.quest.selected{
+ border-color:var(--green);
+ box-shadow:0 0 0 1px var(--green);
+}
+
+.quest.favorite{
+ border-color:#654;
+}
+
+.quest.done{
+ opacity:.4;
+}
+
+.icon{
+ font-size:1.7rem;
+ margin-bottom:12px;
+}
+
+.tag{
+ color:var(--muted);
+ font-size:.6rem;
+ letter-spacing:.12em;
+ text-transform:uppercase;
+}
+
+.quest h3{
+ margin:7px 0;
+}
+
+.quest p{
+ color:var(--muted);
+ font-size:.8rem;
+ line-height:1.5;
+}
+
+.heart{
+ position:absolute;
+ right:13px;
+ top:13px;
+ cursor:pointer;
+ font-size:1rem;
+}
+
+/* BUTTONS */
+
+.actions{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+ margin-top:16px;
+}
+
+.action{
+ border:1px solid var(--line);
+ background:var(--card);
+ color:white;
+ border-radius:11px;
+ padding:11px 15px;
+ cursor:pointer;
+ font-size:.78rem;
+ font-weight:700;
+}
+
+.action:hover{
+ border-color:#555;
+}
+
+.primary{
+ background:var(--green);
+ color:black;
+ border-color:var(--green);
+}
+
+/* RANDOM */
+
+.random{
+ margin-top:30px;
+ padding:20px;
+ border:1px solid var(--line);
+ border-radius:15px;
+ background:var(--card);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+}
+
+.random strong{
+ display:block;
+ margin-bottom:4px;
+}
+
+.random small{
+ color:var(--muted);
+}
+
+/* ACHIEVEMENTS */
+
+.achievements{
+ margin-top:35px;
+}
+
+.achievement-grid{
+ display:grid;
+ grid-template-columns:
+ repeat(auto-fit,minmax(180px,1fr));
+ gap:8px;
+}
+
+.badge{
+ padding:15px;
+ border:1px solid var(--line);
+ border-radius:13px;
+ background:var(--card);
+}
+
+.badge.locked{
+ opacity:.25;
+}
+
+.badge b{
+ display:block;
+ margin-bottom:4px;
+}
+
+.badge span{
+ color:var(--muted);
+ font-size:.7rem;
+}
+
+/* TOAST */
+
 #toast{
- position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;
- background:#f2f3f7;color:#090a0f;padding:15px 20px;border-radius:14px;font-weight:800;
- transition:.25s;pointer-events:none;box-shadow:0 15px 50px #000
+ position:fixed;
+ bottom:22px;
+ left:50%;
+ transform:translate(-50%,20px);
+ opacity:0;
+ background:white;
+ color:black;
+ padding:13px 18px;
+ border-radius:12px;
+ font-weight:800;
+ font-size:.75rem;
+ transition:.25s;
+ pointer-events:none;
+ z-index:99;
 }
-#toast.show{opacity:1;transform:translate(-50%,0)}
-footer{margin-top:35px;color:#626879;font-size:.75rem;text-align:center}
+
+#toast.show{
+ opacity:1;
+ transform:translate(-50%,0);
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+ header{
+  flex-direction:column;
+ }
+
+ h1{
+  font-size:3.7rem;
+ }
+
+ .grid{
+  grid-template-columns:1fr;
+ }
+
+ .random{
+  flex-direction:column;
+  align-items:flex-start;
+ }
+
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
 <header>
+
 <div>
-<div class="kicker">Personal Quest Log · 2026</div>
-<h1>Agata's<br>Sidequests</h1>
-<div class="subtitle">Nicht jede Mission muss einen Zweck haben. Wähle eine Sidequest und mach heute etwas, das später eine gute Geschichte ergibt.</div>
+
+ <div class="logo">
+  <div class="raccoon">🦝</div>
+
+  <div>
+   <div class="kicker">
+    Unauthorized Dating Department
+   </div>
+  </div>
+ </div>
+
+ <h1>DATE<br>QUEST</h1>
+
+ <div class="subtitle">
+  Pick a quest. Touch grass. Create lore.
+  The raccoon takes absolutely no responsibility
+  for your decisions.
+ </div>
+
 </div>
+
 <div class="stats">
-<div class="stat"><b>22</b><span>LEVEL</span></div>
-<div class="stat"><b>62%</b><span>XP</span><div class="progress"><i></i></div></div>
+
+ <div class="stat">
+  <b id="level">1</b>
+  <span>LEVEL</span>
+ </div>
+
+ <div class="stat">
+  <b id="xp">0</b>
+  <span>XP</span>
+ </div>
+
+ <div class="stat">
+  <b id="done">0</b>
+  <span>DONE</span>
+ </div>
+
+ <div class="stat">
+  <b id="streak">0</b>
+  <span>STREAK</span>
+ </div>
+
 </div>
+
 </header>
 
-<h2>Wähle deine Sidequest</h2>
+
+<div class="raccoon-message">
+
+ <div class="face">🦝</div>
+
+ <span id="raccoonText">
+  Loading questionable advice...
+ </span>
+
+</div>
+
+
+<div class="modes">
+
+ <button class="mode active" data-mode="all">
+  🦝 ALL
+ </button>
+
+ <button class="mode" data-mode="Date">
+  💘 DATE
+ </button>
+
+ <button class="mode" data-mode="Fitness">
+  🏋️ PUMP
+ </button>
+
+ <button class="mode" data-mode="Self Care">
+  🧖 SELF CARE
+ </button>
+
+ <button class="mode" data-mode="Adventure">
+  🌲 ADVENTURE
+ </button>
+
+ <button class="mode" data-mode="Chaos">
+  💀 CHAOS
+ </button>
+
+ <button class="mode" data-mode="Nerd">
+  🎌 NERD
+ </button>
+
+</div>
+
+
 <div class="grid" id="quests"></div>
 
+
 <div class="actions">
-<button class="action confirm" onclick="confirmQuest()">✓ Quest annehmen</button>
-<button class="action cancel" onclick="clearQuest()">× Zurücksetzen</button>
+
+ <button class="action primary"
+ onclick="acceptQuest()">
+ ✓ ACCEPT QUEST
+ </button>
+
+ <button class="action"
+ onclick="completeQuest()">
+ 🏆 COMPLETE
+ </button>
+
+ <button class="action"
+ onclick="shareQuest()">
+ 💌 SHARE
+ </button>
+
+ <button class="action"
+ onclick="badDecision()">
+ 💀 BAD IDEA
+ </button>
+
 </div>
 
-<footer>Class: Sporty Nerd · Tech Mage · Chaos Neutral</footer>
+
+<div class="random">
+
+ <div>
+
+  <strong>
+   🦝 Let the raccoon decide.
+  </strong>
+
+  <small>
+   Zero responsibility. Maximum lore.
+  </small>
+
+ </div>
+
+ <button
+ class="action primary"
+ onclick="randomQuest()">
+
+ 🎲 SPIN THE RACCOON
+
+ </button>
+
 </div>
+
+
+<div class="achievements">
+
+ <h2>Achievements</h2>
+
+ <div class="achievement-grid">
+
+  <div class="badge" id="badge1">
+   🦝
+   <b>Raccoon Initiate</b>
+   <span>Complete your first quest.</span>
+  </div>
+
+  <div class="badge locked" id="badge2">
+   🔥
+   <b>Touch Grass</b>
+   <span>Complete 5 quests.</span>
+  </div>
+
+  <div class="badge locked" id="badge3">
+   💀
+   <b>Questionable Decisions</b>
+   <span>Complete 10 quests.</span>
+  </div>
+
+  <div class="badge locked" id="badge4">
+   🏆
+   <b>Main Character</b>
+   <span>Reach 1000 XP.</span>
+  </div>
+
+  <div class="badge locked" id="badge5">
+   🦝👑
+   <b>Raccoon Lord</b>
+   <span>Complete 20 quests.</span>
+  </div>
+
+ </div>
+
+</div>
+
+
+<footer>
+ 🦝 DATE QUEST · Chaos Neutral · No refunds
+</footer>
+
+</div>
+
+
 <div id="toast"></div>
 
+
 <script>
-const quests=[
-  ["🦝","Raccoon Date","Chaos","Ihr habt 60 Minuten Zeit und müsst spontan das lustigste Date erfinden, das ihr für unter 15 € hinbekommt.","+200 XP"],
-  ["🛒","€10 Challenge","Chaos","Jede Person bekommt 10 € und muss für die andere eine möglichst lustige Überraschung kaufen.","+150 XP"],
-  ["🌅","Sunset Quest","Romantic","Einen schönen Aussichtspunkt suchen, Sonnenuntergang anschauen und einfach eine Weile zusammen sitzen.","+130 XP"],
-  ["🏋️","Pump & Hust Hust","Fitness","Zusammen ins Gym gehen, gegenseitig pushen und danach so tun, als hätten wir gerade den Endgegner besiegt.","+140 XP"],
-  ["🚗","Random Adventure","Adventure","Eine Münze werfen, irgendwohin fahren und den ersten interessanten Ort erkunden, den ihr findet.","+180 XP"]
-  [""🥊💥,"Gymi und Tren ","Adventure","Eine Münze werfen, irgendwohin fahren und den ersten interessanten Ort erkunden, den ihr findet.","+180 XP"]
+
+const quests = [
+
+["🦝💘","Raccoon Date","Chaos",
+"60 minutes. €15 budget. Create the weirdest date possible.",
+200],
+
+["🏋️‍♀️💪","Pump & Hust Hust","Fitness",
+"Hit the gym together. Push each other. Pretend you're in a training montage.",
+140],
+
+["🧖‍♀️✨","Self-Care Arc","Self Care",
+"Face mask. Snacks. Cozy clothes. Zero productivity.",
+100],
+
+["🧗‍♀️🔥","Climbing Arc","Adventure",
+"Go climbing. First person to give up owes the other a snack.",
+150],
+
+["🌅💞","Sunset Quest","Date",
+"Find a nice viewpoint and watch the sunset together.",
+140],
+
+["🛒💸","€10 Challenge","Chaos",
+"Buy each other the funniest thing you can find for €10.",
+150],
+
+["🚗🗺️","Random Adventure","Adventure",
+"Drive somewhere you've never been and explore.",
+180],
+
+["🍜👩‍🍳","Chef's Quest","Date",
+"Cook something neither of you has ever made.",
+130],
+
+["🥊💥","Gym & Tren","Fitness",
+"Train together and leave looking like two NPCs who accidentally became strong.",
+150],
+
+["🏃‍♀️🏙️","Run & Explore","Fitness",
+"Try a new running route and discover somewhere new.",
+120],
+
+["🌲🥾","Touch Grass","Adventure",
+"Go hiking. Put your phone away. Become temporarily feral.",
+130],
+
+["🎌🍿","Anime Arc","Nerd",
+"Start an anime neither of you has watched before.",
+90],
+
+["🎮🤝","Co-Op Chaos","Nerd",
+"Play a co-op game and test whether your relationship survives.",
+110],
+
+["📚☕","Bookstore Date","Date",
+"Pick a book for each other without explaining your choice.",
+120],
+
+["🍦💘","Dessert Hunt","Date",
+"Find the best dessert in town and judge it like food critics.",
+100],
+
+["🧺🌳","Park Picnic","Date",
+"Bring snacks, a blanket and absolutely no schedule.",
+130],
+
+["🎳🔥","Bowling Battle","Date",
+"Loser buys the next snack.",
+130],
+
+["🌙🚶‍♀️","Midnight Walk","Date",
+"Walk around at night and talk about everything and nothing.",
+130],
+
+["🎲🗺️","Wild Card","Chaos",
+"Flip a coin. Heads: one person chooses. Tails: the other chooses.",
+180],
+
+["🦝😂","Raccoon Mode","Chaos",
+"Do something completely unnecessary purely because it is funny.",
+80],
+
+["🤫😈","Secret Quest","Chaos",
+"One person secretly plans the date. The other gets zero spoilers.",
+180],
+
+["🎁👀","Mystery Box","Chaos",
+"Each person buys three tiny things that remind them of the other.",
+150],
+
+["📸✨","Photo Quest","Date",
+"Take ten random photos and create a ridiculous story from them.",
+100],
+
+["🏹🎯","Aim & Chill","Date",
+"Darts, archery or another challenge. Winner gets bragging rights.",
+140],
+
+["🎢😈","Adrenaline Arc","Adventure",
+"Try something that scares you just a little.",
+170],
+
+["🥐☕","Breakfast Quest","Date",
+"Go for breakfast and then wander around without a plan.",
+110],
+
+["🌊☀️","Summer Quest","Adventure",
+"Go to a lake and spend the day with no schedule.",
+150],
+
+["🧸🎬","Childhood Rewatch","Nerd",
+"Watch a childhood movie and recreate the nostalgia.",
+110],
+
+["🦝💀","Goblin Mode","Chaos",
+"Leave the house with no plan and see what happens.",
+120],
+
+["🍕🚶","Pizza Walk","Date",
+"Get pizza and eat it somewhere outside like two suspicious raccoons.",
+100],
+
+["🎤😈","Karaoke Arc","Chaos",
+"Sing a song neither of you can actually sing.",
+160]
+
 ];
+
+
 let selected=null;
-const root=document.getElementById("quests");
-quests.forEach((q,i)=>{
- const el=document.createElement("button"); el.className="quest"; el.type="button";
- el.innerHTML=`<div class="icon">${q[0]}</div><span class="tag">${q[2]} · ${q[4]}</span><h3>${q[1]}</h3><p>${q[3]}</p><div class="check">✓</div>`;
- el.onclick=()=>{document.querySelectorAll(".quest").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");selected=i};
- root.appendChild(el);
-});
-function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2600)}
-function confirmQuest(){
- if(selected===null){toast("Wähle zuerst eine Sidequest.");return}
- const q=quests[selected]; toast(`QUEST ACCEPTED: ${q[1]} · ${q[4]}`);
+
+let mode="all";
+
+let xp=
+Number(localStorage.getItem("xp"))||0;
+
+let completed=
+JSON.parse(localStorage.getItem("completed"))||[];
+
+let favorites=
+JSON.parse(localStorage.getItem("favorites"))||[];
+
+
+const root=
+document.getElementById("quests");
+
+
+const memes=[
+
+"🦝 The raccoon has reviewed your options. It recommends chaos.",
+
+"🦝 Reminder: you are legally allowed to make questionable memories.",
+
+"🦝 Touch grass. Acquire lore.",
+
+"🦝 Your ancestors did not survive for you to stay home scrolling.",
+
+"🦝 Romantic development detected.",
+
+"🦝 This could either be a great date or a funny story.",
+
+"🦝 Gym first. Existential crisis later.",
+
+"🦝 No thoughts. Only sidequests.",
+
+"🦝 The council of raccoons has approved this date.",
+
+"🦝 Character development is unfortunately required.",
+
+"🦝 Main character energy detected.",
+
+"🦝 You have been assigned a sidequest."
+
+];
+
+
+function meme(){
+
+ document.getElementById("raccoonText")
+ .textContent=
+ memes[Math.floor(Math.random()*memes.length)];
+
 }
-function clearQuest(){selected=null;document.querySelectorAll(".quest").forEach(x=>x.classList.remove("selected"));toast("Quest-Auswahl zurückgesetzt.")}
+
+
+function render(){
+
+ root.innerHTML="";
+
+ quests.forEach((q,i)=>{
+
+  if(mode!=="all" && q[2]!==mode)
+   return;
+
+  const el=
+  document.createElement("button");
+
+  el.className="quest";
+
+  if(selected===i)
+   el.classList.add("selected");
+
+  if(completed.includes(i))
+   el.classList.add("done");
+
+  if(favorites.includes(i))
+   el.classList.add("favorite");
+
+  el.innerHTML=`
+
+   <div
+   class="heart"
+   onclick="toggleFavorite(event,${i})">
+   ${favorites.includes(i)?"❤️":"♡"}
+   </div>
+
+   <div class="icon">
+   ${q[0]}
+   </div>
+
+   <div class="tag">
+   ${q[2]} · +${q[4]} XP
+   </div>
+
+   <h3>
+   ${q[1]}
+   </h3>
+
+   <p>
+   ${q[3]}
+   </p>
+
+  `;
+
+  el.onclick=()=>{
+
+   selected=i;
+
+   render();
+
+  };
+
+  root.appendChild(el);
+
+ });
+
+ updateStats();
+
+}
+
+
+function updateStats(){
+
+ const level=
+ Math.floor(xp/500)+1;
+
+ document.getElementById("level")
+ .textContent=level;
+
+ document.getElementById("xp")
+ .textContent=xp;
+
+ document.getElementById("done")
+ .textContent=completed.length;
+
+ document.getElementById("streak")
+ .textContent=Math.min(completed.length,7);
+
+ checkAchievements();
+
+}
+
+
+function toast(text){
+
+ const x=
+ document.getElementById("toast");
+
+ x.textContent=text;
+
+ x.classList.add("show");
+
+ setTimeout(()=>{
+  x.classList.remove("show");
+ },2500);
+
+}
+
+
+function acceptQuest(){
+
+ if(selected===null){
+
+  toast("🦝 Pick a quest first.");
+
+  return;
+
+ }
+
+ toast(
+ "🦝 QUEST ACCEPTED: "+
+ quests[selected][1]
+ );
+
+}
+
+
+function completeQuest(){
+
+ if(selected===null){
+
+  toast("🦝 You need to choose a quest.");
+
+  return;
+
+ }
+
+ if(completed.includes(selected)){
+
+  toast("🏆 Already completed.");
+
+  return;
+
+ }
+
+ completed.push(selected);
+
+ xp+=quests[selected][4];
+
+ localStorage.setItem(
+ "completed",
+ JSON.stringify(completed)
+ );
+
+ localStorage.setItem(
+ "xp",
+ xp
+ );
+
+ toast(
+ "🦝 QUEST COMPLETE · +"+
+ quests[selected][4]+" XP"
+ );
+
+ meme();
+
+ render();
+
+}
+
+
+function randomQuest(){
+
+ const available=
+ quests
+ .map((q,i)=>i)
+ .filter(i=>!completed.includes(i));
+
+ if(!available.length){
+
+  toast("🦝 You completed everything. Touch grass.");
+
+  return;
+
+ }
+
+ const i=
+ available[
+ Math.floor(Math.random()*available.length)
+ ];
+
+ selected=i;
+
+ mode="all";
+
+ document
+ .querySelectorAll(".mode")
+ .forEach(x=>x.classList.remove("active"));
+
+ document
+ .querySelector('[data-mode="all"]')
+ .classList.add("active");
+
+ render();
+
+ document
+ .querySelector(".selected")
+ ?.scrollIntoView({
+  behavior:"smooth",
+  block:"center"
+ });
+
+ toast(
+ "🎲 THE RACCOON HAS CHOSEN: "+
+ quests[i][1]
+ );
+
+}
+
+
+function toggleFavorite(event,i){
+
+ event.stopPropagation();
+
+ if(favorites.includes(i)){
+
+  favorites=
+  favorites.filter(x=>x!==i);
+
+ }else{
+
+  favorites.push(i);
+
+ }
+
+ localStorage.setItem(
+ "favorites",
+ JSON.stringify(favorites)
+ );
+
+ render();
+
+}
+
+
+function shareQuest(){
+
+ if(selected===null){
+
+  toast("🦝 Choose a quest first.");
+
+  return;
+
+ }
+
+ const q=quests[selected];
+
+ const text=
+ `🦝 DATE QUEST\n\n`+
+ `${q[0]} ${q[1]}\n\n`+
+ `${q[3]}\n\n`+
+ `Reward: +${q[4]} XP`;
+
+ const url=
+ "https://wa.me/?text="+
+ encodeURIComponent(text);
+
+ window.open(url,"_blank");
+
+}
+
+
+function badDecision(){
+
+ const ideas=[
+
+ "🦝 Go get ice cream. Immediately.",
+
+ "🦝 Go somewhere neither of you has been.",
+
+ "🦝 Buy matching stupid socks.",
+
+ "🦝 Order the weirdest thing on the menu.",
+
+ "🦝 Take a train and get off at a random stop.",
+
+ "🦝 Go to a playground after dark.",
+
+ "🦝 Cook something you've never heard of.",
+
+ "🦝 Challenge each other to a ridiculous competition.",
+
+ "🦝 Get snacks and watch the worst movie you can find.",
+
+ "🦝 Go on a 30-minute adventure with €5.",
+
+ "🦝 Let the other person choose your outfit.",
+
+ "🦝 Take 20 photos pretending you're influencers."
+
+ ];
+
+ toast(
+ ideas[Math.floor(Math.random()*ideas.length)]
+ );
+
+}
+
+
+function checkAchievements(){
+
+ const badges=[
+  completed.length>=1,
+  completed.length>=5,
+  completed.length>=10,
+  xp>=1000,
+  completed.length>=20
+ ];
+
+ badges.forEach((done,i)=>{
+
+  const el=
+  document.getElementById(
+   "badge"+(i+1)
+  );
+
+  if(done)
+   el.classList.remove("locked");
+
+ });
+
+}
+
+
+document
+.querySelectorAll(".mode")
+.forEach(button=>{
+
+ button.onclick=()=>{
+
+  mode=button.dataset.mode;
+
+  selected=null;
+
+  document
+  .querySelectorAll(".mode")
+  .forEach(x=>
+   x.classList.remove("active")
+  );
+
+  button.classList.add("active");
+
+  render();
+
+ };
+
+});
+
+
+meme();
+
+render();
+
 </script>
+
 </body>
 </html>
