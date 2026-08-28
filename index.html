@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -30,7 +32,8 @@ body{
  font-family:Inter,system-ui,sans-serif;
 }
 
-button{
+button,
+textarea{
  font:inherit;
 }
 
@@ -111,7 +114,7 @@ h1{
  font-size:.6rem;
 }
 
-/* RACCOON MESSAGE */
+/* RACCOON */
 
 .raccoon-message{
  margin:22px 0;
@@ -133,7 +136,7 @@ h1{
  font-size:.85rem;
 }
 
-/* MODE BUTTONS */
+/* FILTER */
 
 .modes{
  display:flex;
@@ -162,7 +165,7 @@ h1{
  color:black;
 }
 
-/* QUESTS */
+/* QUEST GRID */
 
 .grid{
  display:grid;
@@ -180,7 +183,7 @@ h1{
  color:white;
  text-align:left;
  cursor:pointer;
- min-height:185px;
+ min-height:205px;
  transition:.18s;
 }
 
@@ -319,6 +322,167 @@ h1{
  font-size:.7rem;
 }
 
+/* RESPONSE SYSTEM */
+
+.response-panel{
+ margin-top:35px;
+ padding:22px;
+ border:1px solid var(--line);
+ border-radius:16px;
+ background:var(--card);
+}
+
+.response-panel h2{
+ margin-top:0;
+}
+
+.response-panel p{
+ color:var(--muted);
+ font-size:.8rem;
+ line-height:1.5;
+}
+
+.response-help{
+ padding:12px;
+ border:1px solid var(--line);
+ background:#0c0c0c;
+ border-radius:11px;
+ font-size:.72rem;
+ color:var(--muted);
+}
+
+.response-list{
+ margin-top:15px;
+ display:grid;
+ gap:8px;
+}
+
+.response-item{
+ padding:14px;
+ background:#0c0c0c;
+ border:1px solid var(--line);
+ border-radius:12px;
+}
+
+.response-item.selected-response{
+ border-color:#555;
+}
+
+.response-item-header{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ align-items:center;
+}
+
+.response-item-title{
+ font-weight:800;
+ font-size:.82rem;
+}
+
+.response-item-category{
+ color:var(--muted);
+ font-size:.6rem;
+ text-transform:uppercase;
+ letter-spacing:.1em;
+}
+
+.response-buttons{
+ display:flex;
+ gap:6px;
+ margin-top:10px;
+}
+
+.verdict{
+ flex:1;
+ border:1px solid var(--line);
+ background:#111;
+ color:#999;
+ border-radius:9px;
+ padding:9px 5px;
+ cursor:pointer;
+ font-size:.68rem;
+ font-weight:800;
+}
+
+.verdict:hover{
+ color:white;
+ border-color:#666;
+}
+
+.verdict.yes.active{
+ background:var(--green);
+ color:black;
+ border-color:var(--green);
+}
+
+.verdict.maybe.active{
+ background:white;
+ color:black;
+ border-color:white;
+}
+
+.verdict.no.active{
+ background:var(--red);
+ color:black;
+ border-color:var(--red);
+}
+
+textarea{
+ width:100%;
+ min-height:120px;
+ margin-top:15px;
+ resize:vertical;
+ background:#0c0c0c;
+ color:white;
+ border:1px solid var(--line);
+ border-radius:11px;
+ padding:13px;
+ outline:none;
+}
+
+textarea:focus{
+ border-color:#666;
+}
+
+.response-summary{
+ margin-top:14px;
+ padding:13px;
+ border:1px solid var(--line);
+ border-radius:11px;
+ background:#0c0c0c;
+ font-size:.75rem;
+ line-height:1.7;
+}
+
+.submit-button{
+ width:100%;
+ margin-top:10px;
+}
+
+.response-success{
+ display:none;
+ margin-top:35px;
+ padding:50px 20px;
+ text-align:center;
+ border:1px solid var(--line);
+ border-radius:16px;
+ background:var(--card);
+}
+
+.response-success .big{
+ font-size:4rem;
+}
+
+.response-success h2{
+ font-size:2rem;
+}
+
+.response-success p{
+ color:var(--muted);
+ line-height:1.6;
+}
+
 /* TOAST */
 
 #toast{
@@ -336,6 +500,8 @@ h1{
  transition:.25s;
  pointer-events:none;
  z-index:99;
+ max-width:90%;
+ text-align:center;
 }
 
 #toast.show{
@@ -364,10 +530,16 @@ h1{
   align-items:flex-start;
  }
 
+ .response-buttons{
+  flex-direction:column;
+ }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
@@ -377,47 +549,59 @@ h1{
 
 <div>
 
- <div class="logo">
-  <div class="raccoon">🦝</div>
+<div class="logo">
 
-  <div>
-   <div class="kicker">
-    Unauthorized Dating Department
-   </div>
-  </div>
- </div>
+<div class="raccoon">
+🦝
+</div>
 
- <h1>DATE<br>QUEST</h1>
+<div>
 
- <div class="subtitle">
-  Pick a quest. Touch grass. Create lore.
-  The raccoon takes absolutely no responsibility
-  for your decisions.
- </div>
+<div class="kicker">
+Unauthorized Dating Department
+</div>
 
 </div>
 
+</div>
+
+<h1>
+DATE<br>
+QUEST
+</h1>
+
+<div class="subtitle">
+
+Pick a quest. Touch grass. Create lore.
+The raccoon takes absolutely no responsibility
+for your decisions.
+
+</div>
+
+</div>
+
+
 <div class="stats">
 
- <div class="stat">
-  <b id="level">1</b>
-  <span>LEVEL</span>
- </div>
+<div class="stat">
+<b id="level">1</b>
+<span>LEVEL</span>
+</div>
 
- <div class="stat">
-  <b id="xp">0</b>
-  <span>XP</span>
- </div>
+<div class="stat">
+<b id="xp">0</b>
+<span>XP</span>
+</div>
 
- <div class="stat">
-  <b id="done">0</b>
-  <span>DONE</span>
- </div>
+<div class="stat">
+<b id="done">0</b>
+<span>DONE</span>
+</div>
 
- <div class="stat">
-  <b id="streak">0</b>
-  <span>STREAK</span>
- </div>
+<div class="stat">
+<b id="streak">0</b>
+<span>STREAK</span>
+</div>
 
 </div>
 
@@ -426,302 +610,568 @@ h1{
 
 <div class="raccoon-message">
 
- <div class="face">🦝</div>
+<div class="face">
+🦝
+</div>
 
- <span id="raccoonText">
-  Loading questionable advice...
- </span>
+<span id="raccoonText">
+Loading questionable advice...
+</span>
 
 </div>
 
 
 <div class="modes">
 
- <button class="mode active" data-mode="all">
-  🦝 ALL
- </button>
+<button class="mode active" data-mode="all">
+🦝 ALL
+</button>
 
- <button class="mode" data-mode="Date">
-  💘 DATE
- </button>
+<button class="mode" data-mode="Date">
+💘 DATE
+</button>
 
- <button class="mode" data-mode="Fitness">
-  🏋️ PUMP
- </button>
+<button class="mode" data-mode="Fitness">
+🏋️ PUMP
+</button>
 
- <button class="mode" data-mode="Self Care">
-  🧖 SELF CARE
- </button>
+<button class="mode" data-mode="Self Care">
+🧖 SELF CARE
+</button>
 
- <button class="mode" data-mode="Adventure">
-  🌲 ADVENTURE
- </button>
+<button class="mode" data-mode="Adventure">
+🌲 ADVENTURE
+</button>
 
- <button class="mode" data-mode="Chaos">
-  💀 CHAOS
- </button>
+<button class="mode" data-mode="Chaos">
+💀 CHAOS
+</button>
 
- <button class="mode" data-mode="Nerd">
-  🎌 NERD
- </button>
+<button class="mode" data-mode="Nerd">
+🎌 NERD
+</button>
 
 </div>
 
 
-<div class="grid" id="quests"></div>
+<div class="grid" id="quests">
+</div>
 
 
 <div class="actions">
 
- <button class="action primary"
- onclick="acceptQuest()">
- ✓ ACCEPT QUEST
- </button>
+<button
+class="action primary"
+onclick="acceptQuest()">
 
- <button class="action"
- onclick="completeQuest()">
- 🏆 COMPLETE
- </button>
+✓ ACCEPT QUEST
 
- <button class="action"
- onclick="shareQuest()">
- 💌 SHARE
- </button>
+</button>
 
- <button class="action"
- onclick="badDecision()">
- 💀 BAD IDEA
- </button>
+
+<button
+class="action"
+onclick="completeQuest()">
+
+🏆 COMPLETE
+
+</button>
+
+
+<button
+class="action"
+onclick="shareQuest()">
+
+💌 SHARE
+
+</button>
+
+
+<button
+class="action"
+onclick="badDecision()">
+
+💀 BAD IDEA
+
+</button>
 
 </div>
 
 
 <div class="random">
 
- <div>
+<div>
 
-  <strong>
-   🦝 Let the raccoon decide.
-  </strong>
+<strong>
+🦝 Let the raccoon decide.
+</strong>
 
-  <small>
-   Zero responsibility. Maximum lore.
-  </small>
+<small>
+Zero responsibility. Maximum lore.
+</small>
 
- </div>
+</div>
 
- <button
- class="action primary"
- onclick="randomQuest()">
 
- 🎲 SPIN THE RACCOON
+<button
+class="action primary"
+onclick="randomQuest()">
 
- </button>
+🎲 SPIN THE RACCOON
+
+</button>
+
+</div>
+
+
+<!-- =========================
+     RESPONSE SYSTEM
+     ========================= -->
+
+<div class="response-panel">
+
+<h2>
+🦝 YOUR VERDICT
+</h2>
+
+<p>
+So... which of these would you actually do?
+You can answer as many quests as you want.
+</p>
+
+<div class="response-help">
+
+💡 Pick ❤️ YES, 🤔 MAYBE or ❌ NOPE.
+Your answers will be sent privately to the quest creator.
+
+</div>
+
+
+<div
+class="response-list"
+id="responseList">
+
+</div>
+
+
+<div
+class="response-summary"
+id="responseSummary">
+
+No answers yet.
+
+</div>
+
+
+<textarea
+id="responseMessage"
+maxlength="500"
+placeholder="💬 Secret message for the raccoon...">
+</textarea>
+
+
+<div class="actions">
+
+<button
+class="action primary submit-button"
+onclick="submitResponse()">
+
+🦝 SEND MY VERDICT
+
+</button>
+
+</div>
+
+</div>
+
+
+<div
+class="response-success"
+id="responseSuccess">
+
+<div class="big">
+🦝💌
+</div>
+
+<h2>
+VERDICT RECEIVED.
+</h2>
+
+<p>
+
+The raccoon has successfully delivered
+your answers.
+
+<br><br>
+
+You may now return to your normal
+civilian activities.
+
+</p>
 
 </div>
 
 
 <div class="achievements">
 
- <h2>Achievements</h2>
+<h2>
+Achievements
+</h2>
 
- <div class="achievement-grid">
 
-  <div class="badge" id="badge1">
-   🦝
-   <b>Raccoon Initiate</b>
-   <span>Complete your first quest.</span>
-  </div>
+<div class="achievement-grid">
 
-  <div class="badge locked" id="badge2">
-   🔥
-   <b>Touch Grass</b>
-   <span>Complete 5 quests.</span>
-  </div>
 
-  <div class="badge locked" id="badge3">
-   💀
-   <b>Questionable Decisions</b>
-   <span>Complete 10 quests.</span>
-  </div>
+<div
+class="badge"
+id="badge1">
 
-  <div class="badge locked" id="badge4">
-   🏆
-   <b>Main Character</b>
-   <span>Reach 1000 XP.</span>
-  </div>
+🦝
 
-  <div class="badge locked" id="badge5">
-   🦝👑
-   <b>Raccoon Lord</b>
-   <span>Complete 20 quests.</span>
-  </div>
+<b>
+Raccoon Initiate
+</b>
 
- </div>
+<span>
+Complete your first quest.
+</span>
+
+</div>
+
+
+<div
+class="badge locked"
+id="badge2">
+
+🔥
+
+<b>
+Touch Grass
+</b>
+
+<span>
+Complete 5 quests.
+</span>
+
+</div>
+
+
+<div
+class="badge locked"
+id="badge3">
+
+💀
+
+<b>
+Questionable Decisions
+</b>
+
+<span>
+Complete 10 quests.
+</span>
+
+</div>
+
+
+<div
+class="badge locked"
+id="badge4">
+
+🏆
+
+<b>
+Main Character
+</b>
+
+<span>
+Reach 1000 XP.
+</span>
+
+</div>
+
+
+<div
+class="badge locked"
+id="badge5">
+
+🦝👑
+
+<b>
+Raccoon Lord
+</b>
+
+<span>
+Complete 20 quests.
+</span>
+
+</div>
+
+
+</div>
 
 </div>
 
 
 <footer>
- 🦝 DATE QUEST · Chaos Neutral · No refunds
+
+🦝 DATE QUEST · Chaos Neutral · No refunds
+
 </footer>
 
 </div>
 
 
-<div id="toast"></div>
+<div id="toast">
+</div>
 
 
 <script>
 
+
+/* =========================================================
+   FORMspree
+   ========================================================= */
+
+const FORM_ENDPOINT =
+"https://formspree.io/f/xyeyyzag";
+
+
+/* =========================================================
+   QUESTS
+   ========================================================= */
+
 const quests = [
 
-["🦝💘","Raccoon Date","Chaos",
+["🦝💘",
+"Raccoon Date",
+"Chaos",
 "60 minutes. €15 budget. Create the weirdest date possible.",
 200],
 
-["🏋️‍♀️💪","Pump & Hust Hust","Fitness",
+["🏋️‍♀️💪",
+"Pump & Hust Hust",
+"Fitness",
 "Hit the gym together. Push each other. Pretend you're in a training montage.",
 140],
 
-["🧖‍♀️✨","Self-Care Arc","Self Care",
+["🧖‍♀️✨",
+"Self-Care Arc",
+"Self Care",
 "Face mask. Snacks. Cozy clothes. Zero productivity.",
 100],
 
-["🧗‍♀️🔥","Climbing Arc","Adventure",
+["🧗‍♀️🔥",
+"Climbing Arc",
+"Adventure",
 "Go climbing. First person to give up owes the other a snack.",
 150],
 
-["🌅💞","Sunset Quest","Date",
+["🌅💞",
+"Sunset Quest",
+"Date",
 "Find a nice viewpoint and watch the sunset together.",
 140],
 
-["🛒💸","€10 Challenge","Chaos",
+["🛒💸",
+"€10 Challenge",
+"Chaos",
 "Buy each other the funniest thing you can find for €10.",
 150],
 
-["🚗🗺️","Random Adventure","Adventure",
+["🚗🗺️",
+"Random Adventure",
+"Adventure",
 "Drive somewhere you've never been and explore.",
 180],
 
-["🍜👩‍🍳","Chef's Quest","Date",
+["🍜👩‍🍳",
+"Chef's Quest",
+"Date",
 "Cook something neither of you has ever made.",
 130],
 
-["🥊💥","Gym & Tren","Fitness",
+["🥊💥",
+"Gym & Tren",
+"Fitness",
 "Train together and leave looking like two NPCs who accidentally became strong.",
 150],
 
-["🏃‍♀️🏙️","Run & Explore","Fitness",
+["🏃‍♀️🏙️",
+"Run & Explore",
+"Fitness",
 "Try a new running route and discover somewhere new.",
 120],
 
-["🌲🥾","Touch Grass","Adventure",
+["🌲🥾",
+"Touch Grass",
+"Adventure",
 "Go hiking. Put your phone away. Become temporarily feral.",
 130],
 
-["🎌🍿","Anime Arc","Nerd",
+["🎌🍿",
+"Anime Arc",
+"Nerd",
 "Start an anime neither of you has watched before.",
 90],
 
-["🎮🤝","Co-Op Chaos","Nerd",
+["🎮🤝",
+"Co-Op Chaos",
+"Nerd",
 "Play a co-op game and test whether your relationship survives.",
 110],
 
-["📚☕","Bookstore Date","Date",
+["📚☕",
+"Bookstore Date",
+"Date",
 "Pick a book for each other without explaining your choice.",
 120],
 
-["🍦💘","Dessert Hunt","Date",
+["🍦💘",
+"Dessert Hunt",
+"Date",
 "Find the best dessert in town and judge it like food critics.",
 100],
 
-["🧺🌳","Park Picnic","Date",
+["🧺🌳",
+"Park Picnic",
+"Date",
 "Bring snacks, a blanket and absolutely no schedule.",
 130],
 
-["🎳🔥","Bowling Battle","Date",
+["🎳🔥",
+"Bowling Battle",
+"Date",
 "Loser buys the next snack.",
 130],
 
-["🌙🚶‍♀️","Midnight Walk","Date",
+["🌙🚶‍♀️",
+"Midnight Walk",
+"Date",
 "Walk around at night and talk about everything and nothing.",
 130],
 
-["🎲🗺️","Wild Card","Chaos",
+["🎲🗺️",
+"Wild Card",
+"Chaos",
 "Flip a coin. Heads: one person chooses. Tails: the other chooses.",
 180],
 
-["🦝😂","Raccoon Mode","Chaos",
+["🦝😂",
+"Raccoon Mode",
+"Chaos",
 "Do something completely unnecessary purely because it is funny.",
 80],
 
-["🤫😈","Secret Quest","Chaos",
+["🤫😈",
+"Secret Quest",
+"Chaos",
 "One person secretly plans the date. The other gets zero spoilers.",
 180],
 
-["🎁👀","Mystery Box","Chaos",
+["🎁👀",
+"Mystery Box",
+"Chaos",
 "Each person buys three tiny things that remind them of the other.",
 150],
 
-["📸✨","Photo Quest","Date",
+["📸✨",
+"Photo Quest",
+"Date",
 "Take ten random photos and create a ridiculous story from them.",
 100],
 
-["🏹🎯","Aim & Chill","Date",
+["🏹🎯",
+"Aim & Chill",
+"Date",
 "Darts, archery or another challenge. Winner gets bragging rights.",
 140],
 
-["🎢😈","Adrenaline Arc","Adventure",
+["🎢😈",
+"Adrenaline Arc",
+"Adventure",
 "Try something that scares you just a little.",
 170],
 
-["🥐☕","Breakfast Quest","Date",
+["🥐☕",
+"Breakfast Quest",
+"Date",
 "Go for breakfast and then wander around without a plan.",
 110],
 
-["🌊☀️","Summer Quest","Adventure",
+["🌊☀️",
+"Summer Quest",
+"Adventure",
 "Go to a lake and spend the day with no schedule.",
 150],
 
-["🧸🎬","Childhood Rewatch","Nerd",
+["🧸🎬",
+"Childhood Rewatch",
+"Nerd",
 "Watch a childhood movie and recreate the nostalgia.",
 110],
 
-["🦝💀","Goblin Mode","Chaos",
+["🦝💀",
+"Goblin Mode",
+"Chaos",
 "Leave the house with no plan and see what happens.",
 120],
 
-["🍕🚶","Pizza Walk","Date",
+["🍕🚶",
+"Pizza Walk",
+"Date",
 "Get pizza and eat it somewhere outside like two suspicious raccoons.",
 100],
 
-["🎤😈","Karaoke Arc","Chaos",
+["🎤😈",
+"Karaoke Arc",
+"Chaos",
 "Sing a song neither of you can actually sing.",
 160]
 
 ];
 
 
-let selected=null;
+/* =========================================================
+   STATE
+   ========================================================= */
 
-let mode="all";
+let selected = null;
 
-let xp=
-Number(localStorage.getItem("xp"))||0;
+let mode = "all";
 
-let completed=
-JSON.parse(localStorage.getItem("completed"))||[];
+let xp =
+Number(localStorage.getItem("xp")) || 0;
 
-let favorites=
-JSON.parse(localStorage.getItem("favorites"))||[];
+let completed =
+JSON.parse(
+localStorage.getItem("completed")
+) || [];
+
+let favorites =
+JSON.parse(
+localStorage.getItem("favorites")
+) || [];
 
 
-const root=
+/*
+   THIS IS THE NEW RESPONSE DATA.
+*/
+
+let responses =
+JSON.parse(
+localStorage.getItem("dateQuestResponses")
+) || {};
+
+
+const root =
 document.getElementById("quests");
 
 
-const memes=[
+/* =========================================================
+   RACCOON MEMES
+   ========================================================= */
+
+const memes = [
 
 "🦝 The raccoon has reviewed your options. It recommends chaos.",
 
@@ -745,373 +1195,990 @@ const memes=[
 
 "🦝 Main character energy detected.",
 
-"🦝 You have been assigned a sidequest."
+"🦝 You have been assigned a sidequest.",
+
+"🦝 This raccoon demands lore."
 
 ];
 
 
 function meme(){
 
- document.getElementById("raccoonText")
- .textContent=
- memes[Math.floor(Math.random()*memes.length)];
+document
+.getElementById("raccoonText")
+.textContent =
+memes[
+Math.floor(
+Math.random()*memes.length
+)
+];
 
 }
 
 
-function render(){
-
- root.innerHTML="";
-
- quests.forEach((q,i)=>{
-
-  if(mode!=="all" && q[2]!==mode)
-   return;
-
-  const el=
-  document.createElement("button");
-
-  el.className="quest";
-
-  if(selected===i)
-   el.classList.add("selected");
-
-  if(completed.includes(i))
-   el.classList.add("done");
-
-  if(favorites.includes(i))
-   el.classList.add("favorite");
-
-  el.innerHTML=`
-
-   <div
-   class="heart"
-   onclick="toggleFavorite(event,${i})">
-   ${favorites.includes(i)?"❤️":"♡"}
-   </div>
-
-   <div class="icon">
-   ${q[0]}
-   </div>
-
-   <div class="tag">
-   ${q[2]} · +${q[4]} XP
-   </div>
-
-   <h3>
-   ${q[1]}
-   </h3>
-
-   <p>
-   ${q[3]}
-   </p>
-
-  `;
-
-  el.onclick=()=>{
-
-   selected=i;
-
-   render();
-
-  };
-
-  root.appendChild(el);
-
- });
-
- updateStats();
-
-}
-
-
-function updateStats(){
-
- const level=
- Math.floor(xp/500)+1;
-
- document.getElementById("level")
- .textContent=level;
-
- document.getElementById("xp")
- .textContent=xp;
-
- document.getElementById("done")
- .textContent=completed.length;
-
- document.getElementById("streak")
- .textContent=Math.min(completed.length,7);
-
- checkAchievements();
-
-}
-
+/* =========================================================
+   TOAST
+   ========================================================= */
 
 function toast(text){
 
- const x=
- document.getElementById("toast");
+const x =
+document.getElementById("toast");
 
- x.textContent=text;
+x.textContent = text;
 
- x.classList.add("show");
+x.classList.add("show");
 
- setTimeout(()=>{
-  x.classList.remove("show");
- },2500);
+setTimeout(()=>{
 
-}
+x.classList.remove("show");
 
-
-function acceptQuest(){
-
- if(selected===null){
-
-  toast("🦝 Pick a quest first.");
-
-  return;
-
- }
-
- toast(
- "🦝 QUEST ACCEPTED: "+
- quests[selected][1]
- );
+},2500);
 
 }
 
 
-function completeQuest(){
+/* =========================================================
+   QUEST RENDER
+   ========================================================= */
 
- if(selected===null){
+function render(){
 
-  toast("🦝 You need to choose a quest.");
-
-  return;
-
- }
-
- if(completed.includes(selected)){
-
-  toast("🏆 Already completed.");
-
-  return;
-
- }
-
- completed.push(selected);
-
- xp+=quests[selected][4];
-
- localStorage.setItem(
- "completed",
- JSON.stringify(completed)
- );
-
- localStorage.setItem(
- "xp",
- xp
- );
-
- toast(
- "🦝 QUEST COMPLETE · +"+
- quests[selected][4]+" XP"
- );
-
- meme();
-
- render();
-
-}
+root.innerHTML="";
 
 
-function randomQuest(){
-
- const available=
- quests
- .map((q,i)=>i)
- .filter(i=>!completed.includes(i));
-
- if(!available.length){
-
-  toast("🦝 You completed everything. Touch grass.");
-
-  return;
-
- }
-
- const i=
- available[
- Math.floor(Math.random()*available.length)
- ];
-
- selected=i;
-
- mode="all";
-
- document
- .querySelectorAll(".mode")
- .forEach(x=>x.classList.remove("active"));
-
- document
- .querySelector('[data-mode="all"]')
- .classList.add("active");
-
- render();
-
- document
- .querySelector(".selected")
- ?.scrollIntoView({
-  behavior:"smooth",
-  block:"center"
- });
-
- toast(
- "🎲 THE RACCOON HAS CHOSEN: "+
- quests[i][1]
- );
-
-}
+quests.forEach((q,i)=>{
 
 
-function toggleFavorite(event,i){
+if(
+mode !== "all" &&
+q[2] !== mode
+)return;
 
- event.stopPropagation();
 
- if(favorites.includes(i)){
+const el =
+document.createElement("button");
 
-  favorites=
-  favorites.filter(x=>x!==i);
 
- }else{
+el.className="quest";
 
-  favorites.push(i);
 
- }
+if(selected === i)
+el.classList.add("selected");
 
- localStorage.setItem(
- "favorites",
- JSON.stringify(favorites)
- );
 
- render();
+if(completed.includes(i))
+el.classList.add("done");
+
+
+if(favorites.includes(i))
+el.classList.add("favorite");
+
+
+el.innerHTML = `
+
+<div
+class="heart"
+onclick="toggleFavorite(event,${i})">
+
+${favorites.includes(i) ? "❤️" : "♡"}
+
+</div>
+
+
+<div class="icon">
+${q[0]}
+</div>
+
+
+<div class="tag">
+
+${q[2]} · +${q[4]} XP
+
+</div>
+
+
+<h3>
+${q[1]}
+</h3>
+
+
+<p>
+${q[3]}
+</p>
+
+`;
+
+
+el.onclick=()=>{
+
+selected=i;
+
+render();
+
+meme();
+
+};
+
+
+root.appendChild(el);
+
+});
+
+
+updateStats();
+
+renderResponseList();
 
 }
 
 
-function shareQuest(){
+/* =========================================================
+   RESPONSE LIST
+   ========================================================= */
 
- if(selected===null){
+function renderResponseList(){
 
-  toast("🦝 Choose a quest first.");
+const list =
+document.getElementById("responseList");
 
-  return;
+if(!list)
+return;
 
- }
+list.innerHTML="";
 
- const q=quests[selected];
 
- const text=
- `🦝 DATE QUEST\n\n`+
- `${q[0]} ${q[1]}\n\n`+
- `${q[3]}\n\n`+
- `Reward: +${q[4]} XP`;
+quests.forEach((q,i)=>{
 
- const url=
- "https://wa.me/?text="+
- encodeURIComponent(text);
 
- window.open(url,"_blank");
+const item =
+document.createElement("div");
+
+item.className="response-item";
+
+
+if(responses[i])
+item.classList.add(
+"selected-response"
+);
+
+
+item.innerHTML = `
+
+<div class="response-item-header">
+
+<div>
+
+<div class="response-item-title">
+
+${q[0]} ${q[1]}
+
+</div>
+
+<div class="response-item-category">
+
+${q[2]} · +${q[4]} XP
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="response-buttons">
+
+
+<button
+class="verdict yes
+${responses[i]==="yes" ? "active" : ""}"
+onclick="setResponse(${i},'yes')">
+
+❤️ YES
+
+</button>
+
+
+<button
+class="verdict maybe
+${responses[i]==="maybe" ? "active" : ""}"
+onclick="setResponse(${i},'maybe')">
+
+🤔 MAYBE
+
+</button>
+
+
+<button
+class="verdict no
+${responses[i]==="no" ? "active" : ""}"
+onclick="setResponse(${i},'no')">
+
+❌ NOPE
+
+</button>
+
+
+</div>
+
+`;
+
+
+list.appendChild(item);
+
+});
+
+updateResponseSummary();
 
 }
 
 
-function badDecision(){
+/* =========================================================
+   SET RESPONSE
+   ========================================================= */
 
- const ideas=[
+function setResponse(i,value){
 
- "🦝 Go get ice cream. Immediately.",
+if(
+responses[i] === value
+){
 
- "🦝 Go somewhere neither of you has been.",
+delete responses[i];
 
- "🦝 Buy matching stupid socks.",
+}else{
 
- "🦝 Order the weirdest thing on the menu.",
+responses[i] = value;
 
- "🦝 Take a train and get off at a random stop.",
+}
 
- "🦝 Go to a playground after dark.",
+localStorage.setItem(
+"dateQuestResponses",
+JSON.stringify(responses)
+);
 
- "🦝 Cook something you've never heard of.",
+renderResponseList();
 
- "🦝 Challenge each other to a ridiculous competition.",
+meme();
 
- "🦝 Get snacks and watch the worst movie you can find.",
 
- "🦝 Go on a 30-minute adventure with €5.",
+const messages={
 
- "🦝 Let the other person choose your outfit.",
+yes:
+"❤️ The raccoon detects potential.",
 
- "🦝 Take 20 photos pretending you're influencers."
+maybe:
+"🤔 Suspiciously undecided.",
 
- ];
+no:
+"❌ The raccoon respects your boundaries."
 
- toast(
- ideas[Math.floor(Math.random()*ideas.length)]
- );
+};
+
+
+toast(messages[value]);
 
 }
 
 
-function checkAchievements(){
+/* =========================================================
+   RESPONSE SUMMARY
+   ========================================================= */
 
- const badges=[
-  completed.length>=1,
-  completed.length>=5,
-  completed.length>=10,
-  xp>=1000,
-  completed.length>=20
- ];
+function updateResponseSummary(){
 
- badges.forEach((done,i)=>{
+const summary =
+document.getElementById(
+"responseSummary"
+);
 
-  const el=
-  document.getElementById(
-   "badge"+(i+1)
-  );
+if(!summary)
+return;
 
-  if(done)
-   el.classList.remove("locked");
 
- });
+const values =
+Object.values(responses);
+
+
+const yes =
+values.filter(
+x=>x==="yes"
+).length;
+
+
+const maybe =
+values.filter(
+x=>x==="maybe"
+).length;
+
+
+const no =
+values.filter(
+x=>x==="no"
+).length;
+
+
+const total =
+yes + maybe + no;
+
+
+if(total === 0){
+
+summary.innerHTML =
+"🦝 No answers yet. The raccoon is waiting.";
+
+return;
+
+}
+
+
+const yesNames =
+Object.keys(responses)
+.filter(i=>responses[i]==="yes")
+.map(i=>quests[i][1]);
+
+
+const maybeNames =
+Object.keys(responses)
+.filter(i=>responses[i]==="maybe")
+.map(i=>quests[i][1]);
+
+
+const noNames =
+Object.keys(responses)
+.filter(i=>responses[i]==="no")
+.map(i=>quests[i][1]);
+
+
+summary.innerHTML = `
+
+❤️ <strong>${yes}</strong> YES
+
+·
+
+🤔 <strong>${maybe}</strong> MAYBE
+
+·
+
+❌ <strong>${no}</strong> NOPE
+
+<br><br>
+
+${
+yesNames.length
+? "❤️ " + yesNames.join(", ")
+: ""
+}
+
+${
+maybeNames.length
+? "<br>🤔 " + maybeNames.join(", ")
+: ""
+}
+
+${
+noNames.length
+? "<br>❌ " + noNames.join(", ")
+: ""
+}
+
+`;
+
+}
+
+
+/* =========================================================
+   SEND RESPONSE TO FORMSPREE
+   ========================================================= */
+
+async function submitResponse(){
+
+const responseKeys =
+Object.keys(responses);
+
+
+const message =
+document
+.getElementById("responseMessage")
+.value
+.trim();
+
+
+if(
+responseKeys.length === 0 &&
+!message
+){
+
+toast(
+"🦝 Give the raccoon at least one answer."
+);
+
+return;
+
+}
+
+
+const yes =
+responseKeys
+.filter(i=>responses[i]==="yes")
+.map(i=>quests[i][1]);
+
+
+const maybe =
+responseKeys
+.filter(i=>responses[i]==="maybe")
+.map(i=>quests[i][1]);
+
+
+const no =
+responseKeys
+.filter(i=>responses[i]==="no")
+.map(i=>quests[i][1]);
+
+
+const yesXP =
+responseKeys
+.filter(i=>responses[i]==="yes")
+.reduce(
+(sum,i)=>sum+quests[i][4],
+0
+);
+
+
+const form =
+new URLSearchParams();
+
+
+form.append(
+"subject",
+"🦝 DATE QUEST — New Verdict"
+);
+
+
+form.append(
+"YES",
+yes.length
+? yes.join(", ")
+: "None"
+);
+
+
+form.append(
+"MAYBE",
+maybe.length
+? maybe.join(", ")
+: "None"
+);
+
+
+form.append(
+"NOPE",
+no.length
+? no.join(", ")
+: "None"
+);
+
+
+form.append(
+"XP",
+String(yesXP)
+);
+
+
+form.append(
+"Message",
+message || "No message"
+);
+
+
+form.append(
+"Timestamp",
+new Date().toLocaleString()
+);
+
+
+try{
+
+
+const response =
+await fetch(
+FORM_ENDPOINT,
+{
+
+method:"POST",
+
+headers:{
+"Accept":
+"application/json",
+
+"Content-Type":
+"application/x-www-form-urlencoded"
+
+},
+
+body:form
+
+}
+);
+
+
+if(!response.ok){
+
+throw new Error(
+"Form submission failed"
+);
 
 }
 
 
 document
-.querySelectorAll(".mode")
-.forEach(button=>{
+.querySelector(".response-panel")
+.style.display="none";
 
- button.onclick=()=>{
 
-  mode=button.dataset.mode;
+document
+.getElementById("responseSuccess")
+.style.display="block";
 
-  selected=null;
 
-  document
-  .querySelectorAll(".mode")
-  .forEach(x=>
-   x.classList.remove("active")
-  );
+window.scrollTo({
 
-  button.classList.add("active");
+top:0,
 
-  render();
-
- };
+behavior:"smooth"
 
 });
 
+
+/*
+   Clear locally stored answers after successful sending.
+*/
+
+localStorage.removeItem(
+"dateQuestResponses"
+);
+
+responses={};
+
+
+}catch(error){
+
+console.error(error);
+
+toast(
+"❌ Something went wrong while sending."
+);
+
+}
+
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+function updateStats(){
+
+const level =
+Math.floor(xp/500)+1;
+
+
+document
+.getElementById("level")
+.textContent=level;
+
+
+document
+.getElementById("xp")
+.textContent=xp;
+
+
+document
+.getElementById("done")
+.textContent=
+completed.length;
+
+
+document
+.getElementById("streak")
+.textContent=
+Math.min(
+completed.length,
+7
+);
+
+
+checkAchievements();
+
+}
+
+
+/* =========================================================
+   ACCEPT
+   ========================================================= */
+
+function acceptQuest(){
+
+if(selected===null){
+
+toast(
+"🦝 Pick a quest first."
+);
+
+return;
+
+}
+
+
+toast(
+"🦝 QUEST ACCEPTED: " +
+quests[selected][1]
+);
+
+}
+
+
+/* =========================================================
+   COMPLETE
+   ========================================================= */
+
+function completeQuest(){
+
+if(selected===null){
+
+toast(
+"🦝 You need to choose a quest."
+);
+
+return;
+
+}
+
+
+if(
+completed.includes(selected)
+){
+
+toast(
+"🏆 Already completed."
+);
+
+return;
+
+}
+
+
+completed.push(selected);
+
+xp += quests[selected][4];
+
+
+localStorage.setItem(
+"completed",
+JSON.stringify(completed)
+);
+
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+
+toast(
+"🦝 QUEST COMPLETE · +" +
+quests[selected][4] +
+" XP"
+);
+
+
+meme();
+
+render();
+
+}
+
+
+/* =========================================================
+   RANDOM QUEST
+   ========================================================= */
+
+function randomQuest(){
+
+const available =
+quests
+.map((q,i)=>i)
+.filter(
+i=>!completed.includes(i)
+);
+
+
+if(!available.length){
+
+toast(
+"🦝 You completed everything. Touch grass."
+);
+
+return;
+
+}
+
+
+const i =
+available[
+Math.floor(
+Math.random()*available.length
+)
+];
+
+
+selected=i;
+
+mode="all";
+
+
+document
+.querySelectorAll(".mode")
+.forEach(
+x=>x.classList.remove("active")
+);
+
+
+document
+.querySelector(
+'[data-mode="all"]'
+)
+.classList.add("active");
+
+
+render();
+
+
+document
+.querySelector(".selected")
+?.scrollIntoView({
+
+behavior:"smooth",
+
+block:"center"
+
+});
+
+
+toast(
+"🎲 THE RACCOON HAS CHOSEN: " +
+quests[i][1]
+);
+
+}
+
+
+/* =========================================================
+   FAVORITES
+   ========================================================= */
+
+function toggleFavorite(event,i){
+
+event.stopPropagation();
+
+
+if(
+favorites.includes(i)
+){
+
+favorites =
+favorites.filter(
+x=>x!==i
+);
+
+}else{
+
+favorites.push(i);
+
+}
+
+
+localStorage.setItem(
+"favorites",
+JSON.stringify(favorites)
+);
+
+
+render();
+
+}
+
+
+/* =========================================================
+   WHATSAPP SHARE
+   ========================================================= */
+
+function shareQuest(){
+
+if(selected===null){
+
+toast(
+"🦝 Choose a quest first."
+);
+
+return;
+
+}
+
+
+const q =
+quests[selected];
+
+
+const text =
+
+`🦝 DATE QUEST
+
+${q[0]} ${q[1]}
+
+${q[3]}
+
+Reward: +${q[4]} XP
+
+Would you accept this quest? 👀`;
+
+
+const url =
+"https://wa.me/?text=" +
+encodeURIComponent(text);
+
+
+window.open(
+url,
+"_blank"
+);
+
+}
+
+
+/* =========================================================
+   BAD IDEA
+   ========================================================= */
+
+function badDecision(){
+
+const ideas=[
+
+"🦝 Go get ice cream. Immediately.",
+
+"🦝 Go somewhere neither of you has been.",
+
+"🦝 Buy matching stupid socks.",
+
+"🦝 Order the weirdest thing on the menu.",
+
+"🦝 Take a train and get off at a random stop.",
+
+"🦝 Go to a playground after dark.",
+
+"🦝 Cook something you've never heard of.",
+
+"🦝 Challenge each other to a ridiculous competition.",
+
+"🦝 Get snacks and watch the worst movie you can find.",
+
+"🦝 Go on a 30-minute adventure with €5.",
+
+"🦝 Let the other person choose your outfit.",
+
+"🦝 Take 20 photos pretending you're influencers."
+
+];
+
+
+toast(
+ideas[
+Math.floor(
+Math.random()*ideas.length
+)
+]
+);
+
+}
+
+
+/* =========================================================
+   ACHIEVEMENTS
+   ========================================================= */
+
+function checkAchievements(){
+
+const badges=[
+
+completed.length>=1,
+
+completed.length>=5,
+
+completed.length>=10,
+
+xp>=1000,
+
+completed.length>=20
+
+];
+
+
+badges.forEach(
+(done,i)=>{
+
+const el =
+document.getElementById(
+"badge"+(i+1)
+);
+
+
+if(done)
+el.classList.remove(
+"locked"
+);
+
+}
+);
+
+}
+
+
+/* =========================================================
+   FILTER BUTTONS
+   ========================================================= */
+
+document
+.querySelectorAll(".mode")
+.forEach(button=>{
+
+button.onclick=()=>{
+
+mode =
+button.dataset.mode;
+
+selected=null;
+
+
+document
+.querySelectorAll(".mode")
+.forEach(
+x=>x.classList.remove("active")
+);
+
+
+button.classList.add("active");
+
+
+render();
+
+};
+
+});
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 meme();
 
@@ -1120,4 +2187,7 @@ render();
 </script>
 
 </body>
+
 </html>
+
+
